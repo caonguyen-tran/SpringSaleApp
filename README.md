@@ -1,3 +1,3 @@
 # SpringSaleApp
-Sale Website with Spring, ReactJS /n
+Sale Website with Spring, ReactJS\
 Build by NetBeans IDE
