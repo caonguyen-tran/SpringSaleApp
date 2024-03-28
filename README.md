@@ -1,2 +1,3 @@
 # SpringSaleApp
-Sale Website with Spring, ReactJS
+Sale Website with Spring, ReactJS\
+Build by NetBeans IDE
