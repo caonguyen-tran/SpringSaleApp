@@ -6,9 +6,9 @@ package com.tcn.repositories;
 
 import com.tcn.pojo.Category;
 import java.util.List;
-import javax.persistence.Query;
 import javax.transaction.Transactional;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
@@ -25,8 +25,7 @@ public class CategoryRepositoryImpl implements CategoryRepository{
     @Override
     public List<Category> getCategories() {
         Session session = this.factoryBean.getObject().getCurrentSession();
-        Query query = (Query) session.createNamedQuery("Category.findAll");
+        Query query = session.createNamedQuery("Category.findAll");
         return query.getResultList();
     }
-    
 }

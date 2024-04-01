@@ -8,6 +8,7 @@ import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,26 +16,26 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.Set;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author ACER
  */
 @Entity
-@Table(name = "category")
+@Table(name = "tag")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
-    @NamedQuery(name = "Category.findById", query = "SELECT c FROM Category c WHERE c.id = :id"),
-    @NamedQuery(name = "Category.findByName", query = "SELECT c FROM Category c WHERE c.name = :name"),
-    @NamedQuery(name = "Category.findByDescription", query = "SELECT c FROM Category c WHERE c.description = :description")})
-public class Category implements Serializable {
+    @NamedQuery(name = "Tag.findAll", query = "SELECT t FROM Tag t"),
+    @NamedQuery(name = "Tag.findById", query = "SELECT t FROM Tag t WHERE t.id = :id"),
+    @NamedQuery(name = "Tag.findByName", query = "SELECT t FROM Tag t WHERE t.name = :name"),
+    @NamedQuery(name = "Tag.findByTagcol", query = "SELECT t FROM Tag t WHERE t.tagcol = :tagcol")})
+public class Tag implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,20 +48,20 @@ public class Category implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "name")
     private String name;
-    @Size(max = 255)
-    @Column(name = "description")
-    private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryId")
-    private Set<Product> productSet;
+    @Size(max = 45)
+    @Column(name = "tagcol")
+    private String tagcol;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "tagId")
+    private Set<ProdTag> prodTagSet;
 
-    public Category() {
+    public Tag() {
     }
 
-    public Category(Integer id) {
+    public Tag(Integer id) {
         this.id = id;
     }
 
-    public Category(Integer id, String name) {
+    public Tag(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -81,21 +82,21 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTagcol() {
+        return tagcol;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTagcol(String tagcol) {
+        this.tagcol = tagcol;
     }
 
     @XmlTransient
-    public Set<Product> getProductSet() {
-        return productSet;
+    public Set<ProdTag> getProdTagSet() {
+        return prodTagSet;
     }
 
-    public void setProductSet(Set<Product> productSet) {
-        this.productSet = productSet;
+    public void setProdTagSet(Set<ProdTag> prodTagSet) {
+        this.prodTagSet = prodTagSet;
     }
 
     @Override
@@ -108,10 +109,10 @@ public class Category implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Category)) {
+        if (!(object instanceof Tag)) {
             return false;
         }
-        Category other = (Category) object;
+        Tag other = (Tag) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -120,7 +121,7 @@ public class Category implements Serializable {
 
     @Override
     public String toString() {
-        return "com.tcn.pojo.Category[ id=" + id + " ]";
+        return "com.tcn.pojo.Tag[ id=" + id + " ]";
     }
     
 }

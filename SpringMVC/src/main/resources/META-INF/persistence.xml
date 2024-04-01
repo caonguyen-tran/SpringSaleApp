@@ -7,5 +7,10 @@
     <class>com.tcn.pojo.Product</class>
     <class>com.tcn.pojo.Receipt</class>
     <class>com.tcn.pojo.User</class>
+    <class>com.tcn.pojo.OrderDetail</class>
+    <class>com.tcn.pojo.SaleOrder</class>
+    <class>com.tcn.pojo.ProdTag</class>
+    <class>com.tcn.pojo.Tag</class>
+    <class>com.tcn.pojo.Comment</class>
   </persistence-unit>
 </persistence>

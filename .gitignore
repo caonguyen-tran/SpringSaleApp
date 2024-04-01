@@ -26,3 +26,6 @@ replay_pid*
 /test/target/
 /SpringWeb/target/
 /mavenproject1/target/
+/mavenproject2/target/
+/WebSpringMVC/target/
+/WebSpringMVC/nbproject/

@@ -11,14 +11,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -27,14 +31,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author ACER
  */
 @Entity
-@Table(name = "category")
+@Table(name = "sale_order")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
-    @NamedQuery(name = "Category.findById", query = "SELECT c FROM Category c WHERE c.id = :id"),
-    @NamedQuery(name = "Category.findByName", query = "SELECT c FROM Category c WHERE c.name = :name"),
-    @NamedQuery(name = "Category.findByDescription", query = "SELECT c FROM Category c WHERE c.description = :description")})
-public class Category implements Serializable {
+    @NamedQuery(name = "SaleOrder.findAll", query = "SELECT s FROM SaleOrder s"),
+    @NamedQuery(name = "SaleOrder.findById", query = "SELECT s FROM SaleOrder s WHERE s.id = :id"),
+    @NamedQuery(name = "SaleOrder.findByCreatedDate", query = "SELECT s FROM SaleOrder s WHERE s.createdDate = :createdDate")})
+public class SaleOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,25 +47,25 @@ public class Category implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "name")
-    private String name;
-    @Size(max = 255)
-    @Column(name = "description")
-    private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryId")
-    private Set<Product> productSet;
+    @Column(name = "created_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne
+    private User userId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderId")
+    private Set<OrderDetail> orderDetailSet;
 
-    public Category() {
+    public SaleOrder() {
     }
 
-    public Category(Integer id) {
+    public SaleOrder(Integer id) {
         this.id = id;
     }
 
-    public Category(Integer id, String name) {
+    public SaleOrder(Integer id, Date createdDate) {
         this.id = id;
-        this.name = name;
+        this.createdDate = createdDate;
     }
 
     public Integer getId() {
@@ -73,29 +76,29 @@ public class Category implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
-    public String getDescription() {
-        return description;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
     @XmlTransient
-    public Set<Product> getProductSet() {
-        return productSet;
+    public Set<OrderDetail> getOrderDetailSet() {
+        return orderDetailSet;
     }
 
-    public void setProductSet(Set<Product> productSet) {
-        this.productSet = productSet;
+    public void setOrderDetailSet(Set<OrderDetail> orderDetailSet) {
+        this.orderDetailSet = orderDetailSet;
     }
 
     @Override
@@ -108,10 +111,10 @@ public class Category implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Category)) {
+        if (!(object instanceof SaleOrder)) {
             return false;
         }
-        Category other = (Category) object;
+        SaleOrder other = (SaleOrder) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -120,7 +123,7 @@ public class Category implements Serializable {
 
     @Override
     public String toString() {
-        return "com.tcn.pojo.Category[ id=" + id + " ]";
+        return "com.tcn.pojo.SaleOrder[ id=" + id + " ]";
     }
     
 }

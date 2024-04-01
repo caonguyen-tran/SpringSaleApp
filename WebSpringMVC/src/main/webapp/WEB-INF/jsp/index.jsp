@@ -1,10 +1,9 @@
 <%-- 
     Document   : index
-    Created on : Mar 29, 2024, 7:51:54 PM
+    Created on : Apr 1, 2024, 11:11:52 PM
     Author     : ACER
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello world!</h1>
+        <h1>Hello World!</h1>
     </body>
 </html>
