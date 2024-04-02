@@ -4,7 +4,16 @@
  */
 package com.tcn.controllers;
 
+import com.tcn.pojo.Category;
+import com.tcn.services.CategoryService;
+import com.tcn.utils.HibernateUtils;
+import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -13,9 +22,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class HomeController {
-    
+    @Autowired
+    private CategoryService categoryService;
     @RequestMapping
-    public String index(){
+    public String index(Model model){
+        System.out.println("Hello world!");
+        List<Category> cates = categoryService.getCates();
+        model.addAttribute("categories", cates);
         return "index";
     }
 }
