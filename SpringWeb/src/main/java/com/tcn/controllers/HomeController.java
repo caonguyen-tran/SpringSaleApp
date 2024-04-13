@@ -26,7 +26,6 @@ public class HomeController {
     private CategoryService categoryService;
     @RequestMapping
     public String index(Model model){
-        System.out.println("Hello world!");
         List<Category> cates = categoryService.getCates();
         model.addAttribute("categories", cates);
         return "index";
