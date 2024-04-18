@@ -6,8 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<h1>Hello World! I'M Nguyenn</h1>
+<h1>Hello World! I'M Nguyennn</h1>
 
 
 <h1 class="text-center text-info mt-1">QUẢN TRỊ SẢN PHẨM</h1>

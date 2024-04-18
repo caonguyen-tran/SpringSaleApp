@@ -19,11 +19,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -50,13 +52,14 @@ public class Product implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @NotNull(message = "{product.name.nullErr}")
+    @Size(min = 1, max = 50, message = "{product.name.minMaxErr}")
     @Column(name = "name")
     private String name;
     @Size(max = 255)
     @Column(name = "description")
     private String description;
+    @NotNull(message = "{product.price.nullErr}")
     @Column(name = "price")
     private Long price;
     @Size(max = 50)
@@ -79,6 +82,16 @@ public class Product implements Serializable {
     private Set<Comment> commentSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
     private Set<OrderDetail> orderDetailSet;
+    @Transient
+    private MultipartFile file;
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
 
     public Product() {
     }
@@ -212,5 +225,5 @@ public class Product implements Serializable {
     public String toString() {
         return "com.tcn.pojo.Product[ id=" + id + " ]";
     }
-    
+
 }
