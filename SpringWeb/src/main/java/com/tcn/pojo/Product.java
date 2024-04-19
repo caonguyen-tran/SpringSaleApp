@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.Set;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -71,6 +72,7 @@ public class Product implements Serializable {
     private String image;
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
     private Date createdDate;
     @Column(name = "active")
     private Boolean active;

@@ -13,6 +13,7 @@ import com.tcn.pojo.Product;
 import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
@@ -41,6 +42,13 @@ public class ProductController {
                 System.out.println(ex.getMessage());
             }
         }
+        return "products";
+    }
+    
+    @GetMapping("/products/{productId}")
+    public String productDetails(Model model, @PathVariable(value="productId") int id){
+        model.addAttribute("product", this.prodService.getProductById(id));
+        
         return "products";
     }
 }

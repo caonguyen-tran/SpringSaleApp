@@ -47,4 +47,14 @@ public class ProductServiceImpl implements ProductService{
         }
         this.productRepository.addOrUpdate(p);
     }
+
+    @Override
+    public Product getProductById(int id) {
+        return this.productRepository.getProductById(id);
+    }
+
+    @Override
+    public void deleteProduct(int id) {
+        this.productRepository.deleteProduct(id);
+    }
 }

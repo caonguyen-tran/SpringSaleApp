@@ -38,28 +38,40 @@ public class ProductRepositoryImpl implements ProductRepository {
         CriteriaQuery q = b.createQuery(Product.class);
         Root r = q.from(Product.class);
         q.select(r);
-        
+
         List<Predicate> predicates = new ArrayList<>();
-        
+
         String kw = params.get("kw");
-        if(kw != null && !kw.isEmpty()){
+        if (kw != null && !kw.isEmpty()) {
             predicates.add(b.like(r.get("name"), String.format("%%%s%%", kw)));
         }
-        
+
         q.where(predicates.toArray(Predicate[]::new));
-        
+
         Query query = s.createQuery(q);
         return query.getResultList();
     }
-    
+
     @Override
-    public void addOrUpdate(Product p){
+    public void addOrUpdate(Product p) {
         Session s = this.sessionFactoryBean.getObject().getCurrentSession();
-        if(p.getId() != null){
+        if (p.getId() != null) {
             s.update(p);
-        }
-        else{
+        } else {
             s.save(p);
         }
+    }
+
+    @Override
+    public Product getProductById(int id) {
+        Session s = this.sessionFactoryBean.getObject().getCurrentSession();
+        return s.get(Product.class, id);
+    }
+
+    @Override
+    public void deleteProduct(int id) {
+        Session s = this.sessionFactoryBean.getObject().getCurrentSession();
+        Product p = this.getProductById(id);
+        s.delete(p);
     }
 }
