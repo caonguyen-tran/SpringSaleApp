@@ -51,4 +51,15 @@ public class ProductRepositoryImpl implements ProductRepository {
         Query query = s.createQuery(q);
         return query.getResultList();
     }
+    
+    @Override
+    public void addOrUpdate(Product p){
+        Session s = this.sessionFactoryBean.getObject().getCurrentSession();
+        if(p.getId() != null){
+            s.update(p);
+        }
+        else{
+            s.save(p);
+        }
+    }
 }

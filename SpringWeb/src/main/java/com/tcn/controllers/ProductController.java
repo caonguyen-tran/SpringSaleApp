@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
 /**
  *
  * @author ACER
@@ -29,11 +30,16 @@ public class ProductController {
         model.addAttribute("product", new Product());
         return "products";
     }
-    
+
     @PostMapping("/products")
-    public String createProduct(@ModelAttribute(value="product") @Valid Product p, BindingResult rs){
-        if(!rs.hasErrors()){
-            return "products";
+    public String createProduct(@ModelAttribute(value = "product") @Valid Product p, BindingResult rs) {
+        if (!rs.hasErrors()) {
+            try {
+                this.prodService.addOrUpdate(p);
+                return "redirect:/";
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
         }
         return "products";
     }
